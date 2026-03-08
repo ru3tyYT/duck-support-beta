@@ -1,0 +1,16 @@
+/* Sidebar navigation section labels — bolder and larger */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
+.md-nav--primary > .md-nav__list > .md-nav__item > label.md-nav__link {
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Nested page links stay normal weight */
+.md-nav--primary .md-nav--nested .md-nav__link {
+  font-weight: 400;
+  font-size: 0.72rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
