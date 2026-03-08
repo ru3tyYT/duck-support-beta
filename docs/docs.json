@@ -14,6 +14,12 @@
         "tab": "Revolution Macro",
         "groups": [
           {
+            "group": "Start Here",
+            "pages": [
+              "index"
+            ]
+          },
+          {
             "group": "Revolution Macro",
             "pages": [
               "revolution-macro/index",
