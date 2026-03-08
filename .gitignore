@@ -1,0 +1,25 @@
+# Old troubleshooting files (imported to docs)
+Rdp\ wrapper\ Troubleshooting\ Guide.md
+Troubleshooting\ RDP\ stuff\ bwop.md
+Remote\ Desktop\ Protocol.md
+General\ Optimization\ Guide.md
+
+# MkDocs
+site/
+site违章/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+.vercel
