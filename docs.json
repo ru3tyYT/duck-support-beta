@@ -18,8 +18,8 @@
             "pages": [
               "revolution-macro/index",
               "revolution-macro/troubleshooting",
-              "revolution-macro/common-errors.mdx",
-              "revolution-macro/connection-issues.mdx",
+              "revolution-macro/common-errors",
+              "revolution-macro/connection-issues",
               "revolution-macro/rdp-issues.mdx",
               "revolution-macro/mac-issues.mdx"
             ]
