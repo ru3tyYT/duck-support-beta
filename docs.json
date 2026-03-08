@@ -1,4 +1,5 @@
 {
+  "$schema": "https://mintlify.com/docs.json",
   "name": "Troubleshooting Hub",
   "description": "A troubleshooting hub for Revolution Macro and RDP issues",
   "theme": "mint",
