@@ -1,0 +1,160 @@
+---
+title: RDP Optimization Guide
+description: Optimize your RDP setup for better performance
+---
+
+# RDP Optimization Guide
+
+> This guide is for optimizing RDP after it's already set up. It does not cover RDP setup.
+
+## Requirements Check
+
+### Operating System
+This guide works on:
+- Windows 10 Home/Pro
+- Windows 11 Home/Pro
+
+You need Administrator access to your PC.
+
+### CPU Requirements
+
+Check your CPU in Task Manager → Performance → CPU
+
+**Base Speed:**
+- Above 2.5 GHz = Can run 1 RDP per 2-3 logical processors
+- Below 2.5 GHz = Will be slow, may not support many RDPs
+
+**Cores:**
+- Each core can run ~1 RDP
+- Maximum RDPs = Cores - 2
+- Example: 8 cores = 6 RDPs (if RAM permits)
+
+**Logical Processors:**
+- For modern Intel CPUs (with hyperthreading):
+- Maximum RDPs = (Logical Processors - 4) / 2
+
+### RAM Requirements
+
+Each RDP needs ~4 GB RAM minimum.
+Windows needs at least 4 GB for itself.
+
+**Calculation:**
+```
+Available RAM - Windows RAM (4GB) - Other programs = X
+X / 4 = Maximum RDPs
+```
+
+Example: 32 GB RAM
+- 32 - 4 - 4 = 24 GB available
+- 24 / 4 = 6 RDPs
+
+---
+
+## Optimization Steps
+
+### 1. RDP Plus Setup
+
+Download [Remote Desktop Plus](https://www.donkz.nl/#download)
+
+1. Create a profile in RDP Plus
+2. Use this command format:
+   ```
+   /v:127.0.0.2 /i:ProfileName /title:"Title" /nodrives /nosound /nowallpaper /o:"keyboardhook:i:1" /w:1366 /h:768
+   ```
+3. Save and use different profiles for each RDP
+
+### 2. Process Lasso
+
+Download [Process Lasso](https://bitsum.com/)
+
+1. Install on your main user
+2. Enable ProBalance for ALL users
+3. Keep it running - it helps balance CPU usage
+
+### 3. Core Affinity
+
+This limits which CPU cores each process uses.
+
+1. Right-click each Roblox process
+2. Click CPU Affinity → Always
+3. Select CPU Affinity
+
+**Tip:** Assign 2-3 logical processors per RDP instance. Save as a named affinity for quick access.
+
+> [!WARNING]
+> Don't assign the same processors to multiple RDPs - they will conflict.
+
+### 4. BES (Battle Encoder Shirase)
+
+Download [BES](https://mion.yosei.fi/BES/)
+
+Process limiter to reduce CPU usage:
+
+| Process | Suggested Limit |
+|---------|---------------|
+| mstsc.exe | 60-99% |
+| RobloxPlayerBeta | 5-40% |
+| svchost.exe | 10-50% |
+| Dwm.exe | 40-99% |
+
+> [!WARNING]
+> Higher percentages can cause instability. Start low and adjust.
+
+---
+
+## Debloating Windows
+
+Removing bloatware reduces RAM usage.
+
+> [!WARNING]
+> Create a restore point before debloating!
+
+### Option 1: Windows 10
+Use the [Windows10Debloater](https://github.com/Sycnex/Windows10Debloater) script
+
+### Option 2: Windows 11
+Use the [Win11Debloat](https://github.com/Raphire/Win11Debloat) script
+
+### Option 3: Chris Titus Tech's Utility
+Download [Windows Utility](https://christitus.com/)
+
+Provides a GUI to pick and choose which tweaks to apply.
+
+---
+
+## Registry Editing
+
+> [!DANGER]
+> WARNING: Registry editing can break your PC. Create a restore point first!
+
+### Creating a Restore Point
+1. Search "Create a restore point"
+2. Go to System Properties → System Protection
+3. Click Create
+
+### Backup Registry
+1. Open regedit
+2. File → Export → Select All
+3. Save the backup
+
+### Registry Scripts
+Download pre-made optimization scripts from [Google Drive](https://drive.google.com/file/d/1WsLTY_wijEkXbLEwKtl_PdMHSl5v5zDo/view)
+
+Restart PC after applying. If issues occur, revert via Safe Mode.
+
+---
+
+## Quick Tips
+
+1. **Smaller resolution** = less resource usage (1366x768 recommended)
+2. **Run fewer programs** = more RAM for RDPs
+3. **Use debloating scripts** = reduce background processes
+4. **Lower RDP count** if unstable
+
+---
+
+## Related Articles
+
+- [RDP Setup Guide](/rdp-troubleshooting/rdp-setup)
+- [RDP Wrapper Configuration](/rdp-troubleshooting/rdp-wrapper)
+- [RDP Common Errors](/rdp-troubleshooting/common-errors)
