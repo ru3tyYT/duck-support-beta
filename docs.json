@@ -1,13 +1,7 @@
 {
   "name": "Troubleshooting Hub",
   "description": "A troubleshooting hub for Revolution Macro and RDP issues",
-  "theme": {
-    "mode": "light",
-    "colors": {
-      "primary": "#3F51B5",
-      "accent": "#3F51B5"
-    }
-  },
+  "theme": "mint",
   "navigation": [
     {
       "group": "Revolution Macro",
