@@ -1,0 +1,55 @@
+---
+title: RDP Issues
+description: Revolution Macro issues specific to RDP users
+---
+
+# RDP Issues
+
+Troubleshooting for Revolution Macro when used with Remote Desktop Protocol (RDP).
+
+## Cant Use Tool While Macroing Through RDP
+
+Using RDP to macro while doing other important stuff, but when mouse is outside of RDP, it wont harvest.
+
+### Solution
+
+1. This is a known limitation of RDP
+2. Keep the RDP window focused and visible
+3. Consider using a different remote desktop solution that supports better input handling
+4. Some users have had success with TeamViewer or Parsec
+
+---
+
+## Model Load Failure During Model Preparation
+
+While using AI gather specifically while on RDP wrapper, this error appears the moment the tab goes into windowed mode and is supposed to begin the process of collecting tokens.
+
+### Solution
+
+1. Try changing capture mode to Legacy
+2. Make sure RDP wrapper is properly installed and updated
+3. Verify that your screen resolution is set correctly in RDP settings
+4. Try running both RDP wrapper and macro as administrator
+
+---
+
+## Macro Works on RDP But Harvesting Stops
+
+### Solution
+
+1. Ensure the RDP window remains the active window
+2. Check that your RDP session settings allow for proper input handling
+3. Try adjusting the macro's harvest timing settings
+4. Verify the RDP window is not minimized
+
+---
+
+## Windowed Mode Issues on RDP
+
+### Solution
+
+1. Make sure to run in fullscreen mode on RDP rather than windowed
+2. If windowed is required, ensure the RDP client is set to scale properly
+3. Try adjusting the Roblox client settings for windowed mode
+
+[← Back to Troubleshooting](/revolution-macro/troubleshooting)
