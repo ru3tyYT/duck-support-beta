@@ -32,8 +32,8 @@
           {
             "group": "RDP Troubleshooting",
             "pages": [
-              "rdp-troubleshooting/index.mdx",
-              "rdp-troubleshooting/rdp-setup.mdx",
+              "rdp-troubleshooting/index",
+              "rdp-troubleshooting/rdp-setup",
               "rdp-troubleshooting/connection-issues.mdx",
               "rdp-troubleshooting/rdp-wrapper.mdx",
               "rdp-troubleshooting/common-errors.mdx"
