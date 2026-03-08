@@ -46,7 +46,7 @@
           {
             "group": "Optimization",
             "pages": [
-              "optimization/index"
+              "optimization/index.mdx"
             ]
           }
         ]
