@@ -1,0 +1,67 @@
+---
+title: Connection Issues
+description: Troubleshooting RDP connection problems
+---
+
+# RDP Connection Issues
+
+Solutions for common Remote Desktop connection problems.
+
+## Error: "Remote Desktop can't connect to the remote computer"
+
+### Symptoms
+- Connection fails with error message
+- Unable to reach remote machine
+
+### Possible Causes
+1. Remote Desktop service not running
+2. Firewall blocking connection
+3. Network connectivity issues
+4. Incorrect IP address or hostname
+
+### Solutions
+
+> [!TIP]
+> **Quick Check** — First, verify the remote machine is powered on and reachable with `ping <hostname>`.
+
+#### 1. Verify Remote Desktop is Enabled
+
+On the remote computer:
+1. Open **System Properties**
+2. Go to **Remote** tab
+3. Ensure "Allow remote connections to this computer" is checked
+4. Check "Allow connections only from computers running Remote Desktop with Network Level Authentication"
+
+#### 2. Check Windows Firewall
+
+```powershell
+# Check if RDP is allowed through firewall
+Get-NetFirewallRule -DisplayGroup "Remote Desktop" | Select-Object Name, Enabled
+```
+
+#### 3. Verify Remote Service is Running
+
+```powershell
+# Check Remote Desktop Services status
+Get-Service TermService | Select-Object Status, StartType
+```
+
+#### 4. Check Network Connectivity
+
+1. Verify both machines are on the same network
+2. Check for VPN conflicts
+3. Ensure port 3389 is open
+
+---
+
+## Connection Timeout
+
+### Symptoms
+- Connection attempts hang indefinitely
+- "Connection timed out" error
+
+### Solutions
+
+1. Check router/firewall port forwarding
+2. Verify network latency
+3. Try disabling IPv6
