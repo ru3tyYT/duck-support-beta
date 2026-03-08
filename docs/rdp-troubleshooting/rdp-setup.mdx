@@ -1,0 +1,195 @@
+---
+title: RDP Setup Guide
+description: Complete guide to setting up Remote Desktop Protocol for macroing
+---
+
+# RDP Setup Guide
+
+> [!WARNING]
+> **WARNING**: This is an advanced feature. Only intended for advanced users. It can mess up or break Windows if done wrong.
+
+## Overview
+
+Remote Desktop Protocol (RDP) allows you to run multiple Roblox accounts on the same computer without using virtual machines.
+
+## Requirements
+
+### Windows Version
+- Windows 10 Home/Pro
+- Windows 11 Home/Pro (NOT 24H2 for Pro)
+
+### Hardware
+- At least a Quad-Core CPU
+- At least 8 GB of RAM
+- Stable Internet Connection
+
+---
+
+## Setup for Windows Pro
+
+### Option 1: Modify termsrv.dll
+
+This method allows unlimited RDP sessions without RDP Wrapper.
+
+> [!WARNING]
+> This modifies a core Windows system file. Create backups before proceeding.
+
+1. **Create backups**
+   - Make a folder for original (unedited) DLL files
+   - Make a folder for edited DLL files
+
+2. **Take ownership of termsrv.dll**
+   ```cmd
+   takeown /F c:\Windows\System32\termsrv.dll /A
+   ```
+
+3. **Grant administrators full control**
+   ```cmd
+   icacls c:\Windows\System32\termsrv.dll /grant Administrators:F
+   ```
+
+4. **Stop Remote Desktop Service**
+   ```cmd
+   net stop TermService
+   ```
+   Or stop it in `services.msc`
+
+5. **Edit termsrv.dll with a hex editor**
+
+   Find this pattern:
+   ```
+   39 81 3C 06 00 00 0F 84
+   ```
+   
+   Replace with:
+   ```
+   B8 00 01 00 00 89 81 38 06 00 00 90
+   ```
+
+   > [!WARNING]
+> Replace exactly 24 characters (12 pairs). Do NOT copy/paste - type each pair manually.
+
+6. **Replace the file** in `C:\Windows\System32\`
+
+7. **Start Remote Desktop Service**
+
+### Option 2: PowerShell Script
+
+For a safer automated approach, use the [Termsrv.dll Patcher](https://github.com/DullSmallmega176/termsrv_dll_patcher/blob/main/termsrv_rdp_patch.ps1) script.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+# Then paste the script content
+```
+
+---
+
+## Setup for Windows Home
+
+### Installing RDP Wrapper
+
+1. Download RDP Wrapper from [stascorp/rdpwrap](https://github.com/stascorp/rdpwrap/releases)
+
+2. **Add to Windows Defender exclusions**
+   - Windows Key → Virus & Threat
+   - Manage settings → Scroll to Exclusions
+   - Add or Remove Exclusion → Select Folder
+   - Add your RDP Wrapper folder
+
+3. **Run install.bat as Administrator**
+
+4. **Update the .ini file**
+   - Download latest ini from BSGH Discord
+   - Stop Remote Desktop Service
+   - Replace the ini in `Program Files\RDP Wrapper`
+   - Start the service
+   - Restart PC
+
+---
+
+## Creating Local Users
+
+1. **Create the user**
+   - Press Windows Key → Search "Computer Management"
+   - Go to Local Users and Groups → Users
+   - Right-click → New User
+   - Enter username and password
+
+2. **Add to Remote Desktop Users**
+   - Right-click the new user → Properties
+   - Go to Member Of tab
+   - Click Add → Type "Remote Desktop Users" → Check Names → OK
+
+3. **Important**: Do NOT add RDP users to Administrators group
+
+---
+
+## Using RDP.exe
+
+Download RDP.exe from [Google Drive](https://drive.google.com/file/d/1_o9YZ5ZYT_GWmWNq8NdB6J_o_tymZzk2/view) or [donkz.nl](https://www.donkz.nl/downloads/)
+
+### Command Syntax
+
+```
+RDP.exe /v:127.0.0.2 /i:ProfileName /title:"Window Title" /nodrives /nosound /nowallpaper /o:"keyboardhook:i:1" /w:1366 /h:768
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| `/v:` | IP address (use 127.0.0.2, 127.0.0.3, etc.) |
+| `/i:` | Your saved profile name |
+| `/title:` | Window title |
+| `/o:"keyboardhook:i:1"` | Enables Windows key in RDP |
+| `/w:` / `/h:` | Resolution (1366x768 recommended) |
+
+### Create a Shortcut
+
+1. Open RDP.exe
+2. Create a profile with your settings
+3. Use the command above to create a desktop shortcut
+
+---
+
+## RDP Tips & Tricks
+
+### Minimize to Tray
+
+Use [RBTray](https://github.com/benbuck/rbtray) to minimize RDP to system tray instead of taskbar.
+
+### Prevent Minimized RDP Crashing
+
+By default, minimized RDP pauses. Fix with:
+```cmd
+reg add "HKLM\Software\Microsoft\Terminal Server Client" /v RemoteDesktop_SuppressWhenMinimized /t REG_DWORD /d 2
+```
+
+### Clipboard Redirection
+
+Disable clipboard sharing to prevent errors:
+```
+/o:"redirectclipboard:i:0,keyboardhook:i:1"
+```
+
+### Custom Icons
+
+Change RDP icon in taskbar:
+```
+/icon:"C:\path\to\icon.ico"
+```
+
+---
+
+## Troubleshooting
+
+- **RDP Wrapper not listening**: Update the .ini file
+- **Can't connect**: Check Remote Desktop Service is running
+- **Connection denied**: Verify user is in Remote Desktop Users group
+- See [RDP Wrapper Troubleshooting](/rdp-troubleshooting/rdp-wrapper) for more issues
+
+---
+
+## Additional Resources
+
+- [RDP Wrapper Troubleshooting](/rdp-troubleshooting/rdp-wrapper)
+- [RDP Common Errors](/rdp-troubleshooting/common-errors)
+- [CPU/RDP Optimization Guide](/optimization)
