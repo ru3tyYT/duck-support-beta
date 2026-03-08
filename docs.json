@@ -20,8 +20,8 @@
               "revolution-macro/troubleshooting",
               "revolution-macro/common-errors",
               "revolution-macro/connection-issues",
-              "revolution-macro/rdp-issues.mdx",
-              "revolution-macro/mac-issues.mdx"
+              "revolution-macro/rdp-issues",
+              "revolution-macro/mac-issues"
             ]
           }
         ]
