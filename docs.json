@@ -34,8 +34,8 @@
             "pages": [
               "rdp-troubleshooting/index",
               "rdp-troubleshooting/rdp-setup",
-              "rdp-troubleshooting/connection-issues.mdx",
-              "rdp-troubleshooting/rdp-wrapper.mdx",
+              "rdp-troubleshooting/connection-issues",
+              "rdp-troubleshooting/rdp-wrapper",
               "rdp-troubleshooting/common-errors.mdx"
             ]
           }
