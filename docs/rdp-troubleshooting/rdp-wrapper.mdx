@@ -1,0 +1,182 @@
+---
+title: RDP Wrapper Configuration
+description: Troubleshooting RDP Wrapper configuration issues
+---
+
+# RDP Wrapper Configuration
+
+Common issues related to RDP Wrapper and how to fix them.
+
+---
+
+## 1. RDP Conf Not Supported/Not Listening
+
+![Error screenshot](/assets/images/rdp/wrapper_img1.png)
+
+Your `.ini` file is probably **outdated**. To fix this:
+
+1. Download the latest `.ini` file from the [BSGH Discord server](https://discord.gg/mf9DPaNSdJ) in the channel `#how-to-macro`
+
+2. **Stop Remote Desktop Service** before replacing the `.ini`:
+   - Press Windows key
+   - Type `services`
+   - Open **Services** app
+   - Search for **Remote Desktop Service**
+   - Click **Stop** the service
+   - Replace the `.ini` file in `This PC > Your Drive > Program Files > RDP Wrapper`
+   - Start back Remote Desktop service
+
+> [!TIP]
+> After these steps, everything should show green in RDP Conf.
+
+---
+
+## 2. Remote Desktop Service Session Has Ended
+
+![Error screenshot](/assets/images/rdp/wrapper_img2.png)
+
+The Remote Desktop Service in Services is probably being stopped by a **third party app** (Example: Razer Cortex).
+
+**Solution:**
+- Open Razer Cortex
+- Navigate to **Game Booster** → **Boost** tab
+- Find **Services**
+- Look for **TermService** and disable it
+
+---
+
+## 3. Can't Sign In Your User
+
+![Error screenshot](/assets/images/rdp/wrapper_img3.png)
+
+This most likely happens because the user **is not admin**.
+
+**To make it admin:**
+1. Press Windows key
+2. Click **Other user**
+3. Select your user
+4. Click **Change account type** → **Admin**
+
+---
+
+## 4. Access is Denied (install.bat)
+
+![Error screenshot](/assets/images/rdp/wrapper_img4.png)
+
+This happens because **Windows Defender** or any other **anti-virus software** is blocking it.
+
+**Solution:**
+1. Disable your antivirus
+2. Run `install.bat` as Administrator
+
+---
+
+## 5. Rdp.exe Not Opening
+
+![Error screenshot](/assets/images/rdp/wrapper_img5.png)
+
+This means you don't have **Remote Desktop Connection** installed on your PC.
+
+**Solution:**
+[Download Remote Desktop Connection here](https://go.microsoft.com/fwlink/?linkid=2247659)
+
+---
+
+## 6. Lower CPU Usage of RDP
+
+To lower the CPU usage of RDP, use a shortcut with `1366x768` resolution:
+
+1. Open `rdp.exe`
+2. At the right of **Connect**, click the arrow
+3. Click **Manage Favorites**
+4. Click **Add**
+5. For title, put what you want
+6. In the box below, copy paste this and change the variables:
+
+```
+/v:127.0.0.2 /i:Your_profile_name /title:"Your_choice" /nodrives /nosound /nowallpaper /o:"keyboardhook:i:1" /w:1366 /h:768
+```
+
+7. Press OK and create shortcut
+8. Double-click the shortcut on your desktop
+
+---
+
+## 7. Disconnected Because Another Connection Was Made
+
+![Error screenshot](/assets/images/rdp/wrapper_img6.png)
+
+You are probably trying to log in to `127.0.0.1`. 
+
+**Solution:** Try logging to `127.0.0.2` or higher (e.g., `.3`, `.4`, `.5`)
+
+---
+
+## 8. Unable to Connect to the RDP Port
+
+![Error screenshot](/assets/images/rdp/wrapper_img7.png)
+
+**Solution:**
+
+Make sure these services are running:
+- **Remote Desktop Service**
+- **Remote Desktop Usermode Port Director**
+
+If both are running, make sure the RDP Conf shows everything green. If not, go to **Issue #1**.
+
+---
+
+## 9. This Computer Can't Connect to the Remote Computer
+
+![Error screenshot](/assets/images/rdp/wrapper_img8.png)
+
+This probably means you don't have enough **RAM** to run the RDP.
+
+**Solution:** Try closing background apps that might be using your RAM.
+
+---
+
+## 10. Windows Could Not Start the Remote Desktop Service (Error 126)
+
+![Error screenshot](/assets/images/rdp/wrapper_img9.png)
+
+**Solution:**
+
+1. Open CMD as Administrator
+2. Run this command:
+```cmd
+reg add HKLM\SYSTEM\CurrentControlSet\Services\TermService\Parameters /v ServiceDll /t REG_EXPAND_SZ /d "%SystemRoot%\system32\termsrv.dll" /f
+```
+
+3. Restart your PC and run `install.bat` again
+
+---
+
+## 11. Supported/Not Listening
+
+![Error screenshot](/assets/images/rdp/wrapper_img10.png)
+
+Before anything, make sure you:
+1. Restarted your PC
+2. Remote Desktop Service is running
+3. Remote Desktop Usermode Port Redirector is running
+
+If that didn't fix it, follow these steps:
+
+1. Press Windows → Type **Services** → Open Services app
+2. Scroll down and find **Remote Desktop Service**
+3. Right-click → **Properties**
+4. Go to the **Log on** tab
+5. Select **This Account**
+6. In the box next to it, write `Network Service`
+7. Input your PC password
+8. Press **Apply** and **OK**
+9. Right-click Remote Desktop Service → **Restart**
+
+After these steps, RDP Conf should show listening.
+
+---
+
+## 12. If All Fails
+
+Contact **quarw** in advanced help and they'll try to resolve your issue.
