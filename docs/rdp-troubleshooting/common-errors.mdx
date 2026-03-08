@@ -1,0 +1,210 @@
+---
+title: RDP Common Errors
+description: Common RDP errors and their solutions
+---
+
+# RDP Common Errors
+
+Solutions for common Remote Desktop errors and issues.
+
+---
+
+## 1. Make Sure You Edited termsrv.dll Properly
+
+Did you **manually** change every pair of characters manually (not copying and pasting it or using *Replace >>* in your hex editor)? Or has **Windows** updated recently?
+
+Usually, if you have a **wrongly edited DLL** or **not edited at all**, the error will usually be a blue screen (or a black screen) saying **"The number of connections to the computer is limited"**
+
+> [!TIP]
+> If you are sure that you edited termsrv.dll correctly, try restarting your computer and see if it works (or try editing it again).
+
+**Important:** You need to add 8 more characters after the initial 16 if it's from the select 16 characters part.
+
+> [!WARNING]
+> Make separate folders for **edited** and **original** non-edited DLL copies for when Windows updates. You can just replace termsrv.dll with the one you already have edited.
+
+Check the file properties to ensure you have the same file version as before.
+
+---
+
+## 2. Check if Remote Desktop Services is Running
+
+You can do this by:
+- Opening **services.msc** (set it to automatic when you do it through here)
+- Or using the command `net start TermService` in Command Prompt (run as administrator)
+
+Usually, this is the issue if you are getting an error saying **"Unable to connect to the RDP port of the specified computer (127.0.0.2)."**
+
+Also make sure you've enabled **Remote Desktop** in Windows settings:
+- Search for **Remote Desktop Settings** in Windows settings
+
+---
+
+## 3. Ensure termsrv.dll is Named Correctly
+
+It shouldn't be named something like:
+- `termsvr.dll`
+- `termsrv.dll.bak`
+- `termsrv.dll.dll`
+
+This also applies to error **193: 0xc1**, which usually means that **termsrv.dll** is either **missing in System32** or **corrupted** (edited really wrong - you probably forgot to delete the extra 8+ characters after the initial 16).
+
+Usually, this error will happen when you try to start Remote Desktop Services, and the error will say:
+
+> **"Windows could not start the Remote Desktop Services service on Local Computer."**
+
+> [!NOTE]
+> You might need to disable "Hide common file extensions" in File Explorer Options.
+
+If this didn't work and you have used RDP Wrapper before, run this in **CMD as administrator**:
+
+```cmd
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TermService\Parameters" /v ServiceDll /t REG_EXPAND_SZ /d "%SystemRoot%\System32\termsrv.dll" /f
+```
+
+---
+
+## 4. Check Remote Desktop Users Group
+
+This error will look like something saying **"The connection was denied because the user account is not authorized for remote login"**
+
+**To fix:**
+1. Press the Windows key and search for **Computer Management**, then open it
+2. Go to **Local Users and Groups** → **Groups**
+3. Double-click **Remote Desktop Users**
+4. Click **Add** → **Advanced** → click **Find Now**
+5. Find your local user in the list, click on it, then click **OK** and **Apply**
+
+---
+
+## 5. Verify Port 3389 Connection
+
+Run in **CMD**:
+```cmd
+netstat -na | find "3389"
+```
+
+If it doesn't show anything, it means you might have forgotten to start Remote Desktop service inside `services.msc` or Remote Desktop in **Windows Settings**.
+
+---
+
+## 6. Disconnected Because Another Connection Was Made
+
+It probably means that you are trying to connect into your **main user** (not the local one), or trying to connect to **127.0.0.1** or **your own IP**.
+
+**Solution:** It should be `127.0.0.2`, go to **Fix #10/11**
+
+---
+
+## 7. An Internal Error Has Occurred
+
+It probably means that you have **edited your DLL wrong** in some way.
+
+**Solution:**
+1. Turn off **Remote Desktop Services** in `services.msc`
+2. If you have your original DLL (probably named `termsrv.dll.bak`), remove the `.bak` extension
+3. Copy and paste it into System32
+4. Start the service again
+5. If it starts, good - you will get issue #1, which is a good sign
+
+---
+
+## 8. Your Network Administrator Might Have Ended the Connection
+
+If you have **Razer Cortex** installed, follow these instructions:
+
+1. Open Razer Cortex
+2. Navigate to **Game Booster** → **Services**
+3. Find **TermService** and disable it
+
+---
+
+## 9. Your Credentials Did Not Work
+
+This likely means that the password you entered in rdp.exe is incorrect (or you put in the wrong user).
+
+**Solution:**
+- Create a new user inside **Computer Management**
+- Set the password as "abc123" (it does not have to be a complicated password)
+
+---
+
+## 10. Add Right Stuff Inside rdp.exe
+
+For testing stuff before making your command:
+
+| Field | Value |
+|-------|-------|
+| **Computer(s)** | `127.0.0.2` (really versatile, it can be 127.0.0.3 even, but not 127.0.0.1) |
+| **Users** | Click Windows key → Search "Computer Management" → Open → Go to "Users and Groups" → "Users" → Enter the "Name" of the local user that you made, not the "Full Name" or "Nickname" |
+| **Password** | The password to log into the local user |
+
+> [!NOTE]
+> For **Users**, you need to do this if you made your local user inside Windows settings. Make the local user inside Computer Management (name it something simple like "pleb" or "bwop").
+
+---
+
+## 11. Command Line Syntax
+
+```cmd
+rdp.exe /v:127.0.0.2 /i:[your RDP profile] /title:"be creative in here" /nodrives /nosound /nowallpaper /o:"keyboardhook:i:1" /w:1366 /h:768
+```
+
+---
+
+## 12. RDP Closing After Some Seconds
+
+If your RDP closes after some time (like seconds), it might be because you edited termsrv.dll wrong in a special way. You probably removed something (the pairs of two things inside the DLL).
+
+You might be missing "41" after 90 - it differs across Windows versions. If that's the case, just redo the DLL if you still have a backup.
+
+---
+
+## 13. Rdp.exe Not Loading
+
+**Solution:**
+
+1. Click the **Windows Key** → search up **Installed Apps**
+2. Search for **Remote Desktop Connection**
+3. Click the three dots and **Uninstall**, restart your computer when prompted
+4. Reinstall **Remote Desktop Connection** from [here](https://go.microsoft.com/fwlink/?linkid=2247659)
+5. Try running **rdp.exe** again
+
+---
+
+## 14. If All Fails - DLL Issues
+
+> [!WARNING]
+> **MAKE SURE YOU HAVE A RESTORE POINT BEFORE PROCEEDING**
+
+**This is a last resort:**
+
+1. Go into the menu with the login screen
+2. Hold **Shift** and restart your computer
+3. Click **Troubleshoot**
+4. Click **Advanced Options**
+5. Click **Startup Settings**
+6. Click **Restart**
+7. Click the **number 5** key (for Safe Mode with Networking)
+8. Try to log into your user
+9. If it works, run CMD as administrator and enter: `sfc /scannow`
+10. Restart the computer
+
+---
+
+## 15. Remote Desktop Services Missing in services.msc
+
+If you don't have a restore point:
+
+1. Run in CMD as administrator:
+```cmd
+DISM /Online /Cleanup-Image /Restorehealth
+```
+2. Then run:
+```cmd
+sfc /scannow
+```
+3. Restart your computer
+
+> [!WARNING]
+> If nothing works, you may need to reset your PC. **Save everything important before doing this!**
