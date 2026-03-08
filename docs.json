@@ -36,7 +36,7 @@
               "rdp-troubleshooting/rdp-setup",
               "rdp-troubleshooting/connection-issues",
               "rdp-troubleshooting/rdp-wrapper",
-              "rdp-troubleshooting/common-errors.mdx"
+              "rdp-troubleshooting/common-errors"
             ]
           }
         ]
