@@ -15,8 +15,8 @@
           {
             "group": "Revolution Macro",
             "pages": [
-              "revolution-macro/index",
-              "revolution-macro/troubleshooting",
+              "revolution-macro/index.mdx",
+              "revolution-macro/troubleshooting.mdx",
               "revolution-macro/common-errors",
               "revolution-macro/connection-issues",
               "revolution-macro/rdp-issues",
